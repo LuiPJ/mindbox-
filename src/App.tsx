@@ -8,10 +8,10 @@ import {
   ToggleButton,
 } from "react-bootstrap";
 
-import TodoList from "./components/TodoList/TodoList";
+import ToDoList from "./components/ToDoList/ToDoList";
 import Todo from "./components/ToDo/ToDo";
 
-import { ISRadio, IsTodo, RadioValue } from "./TypeScript/interfaces";
+import { ISRadio, IsTodo, RadioValue } from "./typescript/interfaces";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -84,7 +84,7 @@ function App(): JSX.Element {
       <div className="container">
         <h1 className="text-center mb-4">Todos</h1>
         <div className="button-group">
-          <TodoList addTodo={addTodo} />
+          <ToDoList addTodo={addTodo} />
           <div className="items-group">
             <ButtonGroup style={{ position: "absolute", top: 48 }}>
               {radios.map((radio: RadioValue, index: number) => (

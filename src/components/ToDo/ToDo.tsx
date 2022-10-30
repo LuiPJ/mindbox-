@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button } from "react-bootstrap";
 
-import { Todos } from "../../TypeScript/interfaces";
+import { Todos } from "../../typescript/interfaces";
 
 const Todo = ({ todo, index, markTodo, removeTodo }: Todos) => {
   return (

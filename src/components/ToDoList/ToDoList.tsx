@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Button, Form } from "react-bootstrap";
-import { AddTodo } from "../../TypeScript/interfaces";
+import { AddTodo } from "../../typescript/interfaces";
 
-const TodoList = ({ addTodo }: AddTodo): JSX.Element => {
+const ToDoList = ({ addTodo }: AddTodo): JSX.Element => {
   const [value, setValue] = useState("");
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
@@ -38,4 +38,4 @@ const TodoList = ({ addTodo }: AddTodo): JSX.Element => {
   );
 };
 
-export default TodoList;
+export default ToDoList;
