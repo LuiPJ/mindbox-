@@ -4,6 +4,13 @@ export interface IsTodo {
   isDone?: boolean;
 }
 
+export interface UpdateTodo {
+  index: string | null;
+  todo: IsTodo[];
+  canceled: () => void;
+  edit: (id: string, text?: string) => void;
+}
+
 export interface AddTodo {
   addTodo: (id: string, text: string, isDone: boolean) => void;
 }
@@ -13,6 +20,7 @@ export interface Todos {
   index: string;
   markTodo: (index: string) => void;
   removeTodo: (index: string) => void;
+  updateTodo: (index: string) => void;
 }
 
 export interface RadioValue {

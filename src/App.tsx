@@ -7,23 +7,15 @@ import {
   ListGroup,
   ToggleButton,
 } from "react-bootstrap";
-
-import ToDoList from "./components/ToDoList/ToDoList";
-import Todo from "./components/ToDo/ToDo";
-
 import { ISRadio, IsTodo, RadioValue } from "./typescript/interfaces";
+import Todo from "./components/ToDo/ToDo";
+import ToDoList from "./components/ToDoList/ToDoList";
+import ToDoUpdate from "./components/ToDoUpdate/ToDoUpdate";
 
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 function App(): JSX.Element {
-  const [radioValue, setRadioValue] = useState<string>("All");
-  const radios: RadioValue[] = [
-    { name: "All", variant: "outline-warning" },
-    { name: "Active", variant: "outline-primary" },
-    { name: "Completed", variant: "outline-success" },
-  ];
-
   const [todos, setTodos] = useState<IsTodo[]>([
     {
       id: uuidv4(),
@@ -36,8 +28,17 @@ function App(): JSX.Element {
       isDone: false,
     },
   ]);
+  const [radioValue, setRadioValue] = useState<string>("All");
+  const [isUpdateTodo, setIsUpdateTodo] = useState<boolean>(false);
+  const [idUpdateItem, setIdUpdateItem] = useState<string | null>(null);
 
   const countTodo = todos.filter((todo: IsTodo) => !todo.isDone);
+
+  const radios: RadioValue[] = [
+    { name: "All", variant: "outline-warning" },
+    { name: "Active", variant: "outline-primary" },
+    { name: "Completed", variant: "outline-success" },
+  ];
 
   const isRadios: ISRadio = {
     All: "All",
@@ -53,6 +54,16 @@ function App(): JSX.Element {
   const addTodo = (id: string, text: string, isDone: boolean = false): void => {
     const newTodos = [...todos, { id, text, isDone }];
     setTodos(newTodos);
+  };
+
+  const editTodoItem = (id: string, value?: string): void => {
+    if (id && value) {
+      setTodos((prevState: IsTodo[]) =>
+        prevState.map((item: IsTodo) =>
+          item.id === id ? { ...item, text: value } : item
+        )
+      );
+    }
   };
 
   const markTodo = (index: string): void => {
@@ -79,12 +90,33 @@ function App(): JSX.Element {
     setTodos(CompletedTodo);
   };
 
+  const updateTodo = (index: string): void => {
+    if (index) {
+      setIsUpdateTodo(true);
+      setIdUpdateItem(index);
+    }
+  };
+
+  const cancelUpdateTodo = (): void => {
+    setIsUpdateTodo(false);
+  };
+
   return (
     <div className="app">
       <div className="container">
         <h1 className="text-center mb-4">Todos</h1>
         <div className="button-group">
-          <ToDoList addTodo={addTodo} />
+          {isUpdateTodo ? (
+            <ToDoUpdate
+              index={idUpdateItem}
+              todo={todos}
+              canceled={cancelUpdateTodo}
+              edit={editTodoItem}
+            />
+          ) : (
+            <ToDoList addTodo={addTodo} />
+          )}
+
           <div className="items-group">
             <ButtonGroup style={{ position: "absolute", top: 48 }}>
               {radios.map((radio: RadioValue, index: number) => (
@@ -131,6 +163,7 @@ function App(): JSX.Element {
                   todo={todo}
                   markTodo={markTodo}
                   removeTodo={removeTodo}
+                  updateTodo={updateTodo}
                 />
               </Card.Body>
             </Card>

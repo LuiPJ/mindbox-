@@ -32,7 +32,7 @@ const ToDoList = ({ addTodo }: AddTodo): JSX.Element => {
         style={{ margin: "10px 0px 10px auto", display: "block" }}
         type="submit"
       >
-        Добавить
+        Add
       </Button>
     </Form>
   );
